@@ -10,21 +10,16 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# BEGIN SU GAMIFICATION
 import sys
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-path = os.path.join(BASE_DIR,'..','conf')
+path = os.path.join(BASE_DIR, '..', 'conf')
 if path not in sys.path:
     sys.path.append(path)
-from secret_settings import *
+from secret_settings import *  # pylint disable=wrong-import-position
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -46,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    
+    'channels',
+    'sockets',
+
 ]
 
 MIDDLEWARE = [
@@ -78,7 +75,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'roommate_reminder.wsgi.application'
+ASGI_APPLICATION = 'roommate_reminder.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
