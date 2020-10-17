@@ -134,3 +134,4 @@ django/conf/*
 !django/conf/*.sample
 
 .vscode
+!.vscode/settings.json
