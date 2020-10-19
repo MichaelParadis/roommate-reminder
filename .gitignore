@@ -135,3 +135,5 @@ server/conf/*
 
 .vscode
 !.vscode/settings.json
+
+**/migrations/
