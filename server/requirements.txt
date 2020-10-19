@@ -1,6 +1,7 @@
 channels
 channels_redis
 django
+django-cors-headers
 djangorestframework
 django-filter
 pylint 
